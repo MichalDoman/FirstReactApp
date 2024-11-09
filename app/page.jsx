@@ -1,3 +1,4 @@
+import Feed from "@components/Feed";
 
 const Home = () => {
     return (
@@ -12,6 +13,8 @@ const Home = () => {
             <p className="desc text-center">
                 Description
             </p>
+
+            <Feed />
         </section>
     )
 }
