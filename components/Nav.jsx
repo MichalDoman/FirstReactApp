@@ -9,6 +9,7 @@ const Nav = () => {
   const isUserLoggedIn = true;
 
   const [providers, setProviders ] = useState(null);
+  const [toggleDropDown, setToggleDropdown] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -51,6 +52,67 @@ const Nav = () => {
             </Link>
           </div>
         ): (
+          <>
+            {providers && Object.values(providers).map((provider) => (
+              <button
+                type="button"
+                key={provider.name}
+                onClick={() => signIn(provider.id)}
+                className="black_btn"
+              >
+                Sign In
+              </button>
+            ))}           
+          </>
+        )}
+      </div>
+
+      {/* Mobile Navigation */}
+      
+      <div className="sm:hidden flex realtive">
+        {isUserLoggedIn ? (
+          <div className="flex">
+            <Image 
+                src="/assets/images/logo.svg"
+                width={37}
+                height={37}
+                className="rounded-full"
+                alt="profile"
+                onClick={() => setToggleDropdown((prevState) => 
+                  !prevState
+                )}
+              />
+
+              {toggleDropDown && (
+                <div className="dropdown">
+                  <Link 
+                    href="/profile"
+                    className="dropdown_link"
+                    onClick={() => setToggleDropdown(false)}
+                  >
+                    My Profile  
+                  </Link>
+                  <Link 
+                    href="/create-prompt"
+                    className="dropdown_link"
+                    onClick={() => setToggleDropdown(false)}
+                  >
+                    Create Prompt  
+                  </Link>
+                  <button
+                    type="button"
+                    className="mt-5 w-full black_btn"
+                    onClick={() => {
+                      toggleDropDown(false);
+                      signOut();
+                    }}
+                  >
+                    SignOut
+                  </button>
+                </div>
+              )}
+          </div>
+        ):(
           <>
             {providers && Object.values(providers).map((provider) => (
               <button
